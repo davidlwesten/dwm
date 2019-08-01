@@ -66,11 +66,17 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char *volumeupcmd[] = { "pactl", "set-sink-colume", "0", "+5%", "+5%", NULL };
+static const char *volumedowncmd[] = { "pactl", "set-sink-colume", "0", "-5%", "-5%", NULL };
+static const char *volumemutecmd[] = { "pactl", "set-sink-mute", "0", "toggle", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ 0,                            XF86XK_AudioRaiseVolume,	spawn, 		{.v = volumeupcmd } },
+	{ 0,				XF86XK_AudioLowerVolume,	spawn,		{.v = volumedowncmd } },
+	{ 0,				XF86XK_AudioMute,		spawn,		{.v = volumemutecmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
